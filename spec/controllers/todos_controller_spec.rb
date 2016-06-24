@@ -19,6 +19,11 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe TodosController, type: :controller do
+  let(:todo) { todo = create(:todo) }
+
+  let(:completed_todo) { completed_todo = create(:completed_todo) }
+
+  let!(:todo_list) { todo_list = create_list(:todo, 10) }
 
   # This should return the minimal set of attributes required to create a valid
   # Todo. As you add validations to Todo, be sure to
@@ -34,13 +39,13 @@ RSpec.describe TodosController, type: :controller do
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # TodosController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
+  # let(:valid_session) { {} }
 
   describe "GET #index" do
     it "assigns all todos as @todos" do
-      todo = Todo.create! valid_attributes
-          get :index, params: {}, session: valid_session
-          expect(assigns(:todos)).to eq([todo])
+      # todo = Todo.create! valid_attributes
+      get :index, params: {}
+      expect(assigns(:todo_list)).to eq(todo_list)
     end
   end
 
@@ -48,21 +53,6 @@ RSpec.describe TodosController, type: :controller do
     it "assigns the requested todo as @todo" do
       todo = Todo.create! valid_attributes
           get :show, params: {id: todo.to_param}, session: valid_session
-          expect(assigns(:todo)).to eq(todo)
-    end
-  end
-
-  describe "GET #new" do
-    it "assigns a new todo as @todo" do
-          get :new, params: {}, session: valid_session
-          expect(assigns(:todo)).to be_a_new(Todo)
-    end
-  end
-
-  describe "GET #edit" do
-    it "assigns the requested todo as @todo" do
-      todo = Todo.create! valid_attributes
-          get :edit, params: {id: todo.to_param}, session: valid_session
           expect(assigns(:todo)).to eq(todo)
     end
   end

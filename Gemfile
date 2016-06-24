@@ -37,6 +37,7 @@ group :development do
     gem lib, git: "https://github.com/rspec/#{lib}.git", branch: 'master'
   end
   gem 'pry-rails'
+  gem 'factory_girl_rails', '~> 4.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
