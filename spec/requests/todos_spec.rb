@@ -5,11 +5,10 @@ RSpec.describe "Todos", type: :request do
 
   let(:completed_todo) { completed_todo = create(:completed_todo) }
 
-  let(:todo_list) { todo_list = create_list(:todo, 10) }
+  let(:todo_list) { todo_list = create_list(:todo, 5) }
 
   describe "GET /todos" do
     it "sends a list of todos" do
-      todo_list
       get todos_path
       expect(response).to have_http_status(200)
       expect(json["data"].length).to eq(10)
