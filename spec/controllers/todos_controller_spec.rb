@@ -25,15 +25,7 @@ RSpec.describe TodosController, type: :controller do
 
   let(:todo_list) { todo_list = create_list(:todo, 5) }
 
-  # This should return the minimal set of attributes required to create a valid
-  # Todo. As you add validations to Todo, be sure to
-  # adjust the attributes here as well.
   let(:valid_attributes) { attributes_for :todo }
-
-  # let(:valid_attributes) { {
-  #   title: "Test an uncompleted todo",
-  #   order: 1
-  # } }
 
   let(:invalid_attributes) { attributes_for :todo, title: "" }
 
@@ -111,17 +103,10 @@ RSpec.describe TodosController, type: :controller do
 
   describe "DELETE #destroy" do
     it "destroys the requested todo" do
-      todo = Todo.create! valid_attributes
+      todo
       expect {
-              delete :destroy, params: {id: todo.to_param}, session: valid_session
-            }.to change(Todo, :count).by(-1)
-    end
-
-    it "redirects to the todos list" do
-      todo = Todo.create! valid_attributes
-          delete :destroy, params: {id: todo.to_param}, session: valid_session
-          expect(response).to redirect_to(todos_url)
+        delete :destroy, params: { id: todo.to_param }
+      }.to change(Todo, :count).by(-1)
     end
   end
-
 end

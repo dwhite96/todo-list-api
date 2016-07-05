@@ -73,5 +73,9 @@ RSpec.describe "Todos", type: :request do
   end
 
   describe "DELETE /todos/:id" do
+    it "responds with http status code 204" do
+      delete "/todos/#{todo.id}"
+      expect(response).to have_http_status(204)
+    end
   end
 end
