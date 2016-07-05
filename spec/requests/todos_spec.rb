@@ -22,7 +22,7 @@ RSpec.describe "Todos", type: :request do
 
   describe "GET /todos/:id" do
     it "responds with one todo" do
-      get todos_path, params: {id: todo.to_param}
+      get todos_path, params: { id: todo.to_param }
       expect(response).to have_http_status(200)
       expect(json["data"].length).to eq(1)
     end
@@ -47,5 +47,31 @@ RSpec.describe "Todos", type: :request do
         expect(json["title"]).to eq(["can't be blank"])
       end
     end
+  end
+
+  describe "PUT /todos/:id" do
+    context "with valid data" do
+      let(:new_attributes) { attributes_for :todo, title: "Test an updated todo" }
+
+      it "responds with http status code 200" do
+        put "/todos/#{todo.id}", params: { todo: new_attributes }
+        expect(response).to have_http_status(200)
+      end
+    end
+
+    context "with invalid data" do
+      it "responds with http status code 422" do
+        put "/todos/#{todo.id}", params: { todo: invalid_attributes }
+        expect(response).to have_http_status(422)
+      end
+
+      it "responds with a 'can't be blank' error message" do
+        put "/todos/#{todo.id}", params: { todo: invalid_attributes }
+        expect(json["title"]).to eq(["can't be blank"])
+      end
+    end
+  end
+
+  describe "DELETE /todos/:id" do
   end
 end

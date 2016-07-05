@@ -85,41 +85,26 @@ RSpec.describe TodosController, type: :controller do
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+      let(:new_attributes) { attributes_for :todo, title: "Test an updated todo" }
 
       it "updates the requested todo" do
-        todo = Todo.create! valid_attributes
-              put :update, params: {id: todo.to_param, todo: new_attributes}, session: valid_session
-              todo.reload
-        skip("Add assertions for updated state")
+        put :update, params: { id: todo.to_param, todo: new_attributes }
+        expect { todo.reload }.to change(todo, :title).from(
+          "Test an uncompleted todo").to("Test an updated todo"
+        )
       end
 
       it "assigns the requested todo as @todo" do
-        todo = Todo.create! valid_attributes
-              put :update, params: {id: todo.to_param, todo: valid_attributes}, session: valid_session
-              expect(assigns(:todo)).to eq(todo)
-      end
-
-      it "redirects to the todo" do
-        todo = Todo.create! valid_attributes
-              put :update, params: {id: todo.to_param, todo: valid_attributes}, session: valid_session
-              expect(response).to redirect_to(todo)
+        put :update, params: { id: todo.to_param, todo: new_attributes }
+        expect(assigns(:todo)).to eq(todo)
+        expect(assigns(:todo)).to be_persisted
       end
     end
 
     context "with invalid params" do
       it "assigns the todo as @todo" do
-        todo = Todo.create! valid_attributes
-              put :update, params: {id: todo.to_param, todo: invalid_attributes}, session: valid_session
-              expect(assigns(:todo)).to eq(todo)
-      end
-
-      it "re-renders the 'edit' template" do
-        todo = Todo.create! valid_attributes
-              put :update, params: {id: todo.to_param, todo: invalid_attributes}, session: valid_session
-              expect(response).to render_template("edit")
+        put :update, params: { id: todo.to_param, todo: invalid_attributes }
+        expect(assigns(:todo)).to eq(todo)
       end
     end
   end
