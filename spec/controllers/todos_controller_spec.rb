@@ -80,11 +80,6 @@ RSpec.describe TodosController, type: :controller do
         post :create, params: { todo: invalid_attributes }
         expect(assigns(:todo)).to be_a_new(Todo)
       end
-
-      it "re-renders the 'new' template" do
-        post :create, params: { todo: invalid_attributes }
-        expect(response).to render_template("new")
-      end
     end
   end
 
