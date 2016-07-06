@@ -1,7 +1,7 @@
 # Todo List Rails API
 A simple todo list backend app that serves JSON data. Current functionality includes:
 
-* CRUD operations for a todo item with attributes for title, order, and completion(boolean).
+* CRUD operations for a todo item with attributes for title, order, and completion (boolean).
 * RSpec test suite.
 * That's it! That's all the functionality for now. There may be more features added in the future.
 
@@ -21,19 +21,22 @@ gem 'active_model_serializers', '~> 0.10.0'
 See Gemfile for other dependencies.
 
 ## Getting Started
-* Configuration
+### Configuration
+
 This API uses PostgreSQL databases for the development, test, and production environments. See http://edgeguides.rubyonrails.org/configuring.html#configuring-a-database for configuring a different database.
 
-** Database creation and initialization
+Database creation and initialization
 
 ```ruby
 rake db:create db:migrate
 ```
 
-** Common (RESTful) endpoints to use from your frontend application:
+### Use
+
+Common (RESTful) endpoints to use from your frontend application:
 
 See a list of todos:
-GET ```/todos
+GET ```/todos```
 
 See one todo:
 GET ```/todos/:id```
@@ -48,4 +51,4 @@ bundle exec rspec spec/
 ```
 
 ## Deployment instructions
-This has not been tested yet. Will test in the future. Recommend using Heroku or Amazon Web Services(AWS).
+This has not been tested yet. Will test in the future. Recommend using Heroku or Amazon Web Services (AWS).
