@@ -1,24 +1,51 @@
-# README
+# Todo List Rails API
+A simple todo list backend app that serves JSON data. Current functionality includes:
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* CRUD operations for a todo item with attributes for title, order, and completion(boolean).
+* RSpec test suite.
+* That's it! That's all the functionality for now. There may be more features added in the future.
 
-Things you may want to cover:
 
-* Ruby version
+## Ruby Version
+This API was written and tested with Ruby 2.3.0
 
-* System dependencies
+## System Dependencies
+* Rails 5.0.0.rc1
+* Puma for app server
+* Recommend using ActiveModel::Serializer instead of jbuilder. Just add to Gemfile:
 
+```ruby
+gem 'active_model_serializers', '~> 0.10.0'
+```
+
+See Gemfile for other dependencies.
+
+## Getting Started
 * Configuration
+This API uses PostgreSQL databases for the development, test, and production environments. See http://edgeguides.rubyonrails.org/configuring.html#configuring-a-database for configuring a different database.
 
-* Database creation
+** Database creation and initialization
 
-* Database initialization
+```ruby
+rake db:create db:migrate
+```
 
-* How to run the test suite
+** Common (RESTful) endpoints to use from your frontend application:
 
-* Services (job queues, cache servers, search engines, etc.)
+See a list of todos:
+GET ```/todos
 
-* Deployment instructions
+See one todo:
+GET ```/todos/:id```
 
-* ...
+Add a todo:
+POST ```/todos```
+
+## How to run the test suite
+
+```ruby
+bundle exec rspec spec/
+```
+
+## Deployment instructions
+This has not been tested yet. Will test in the future. Recommend using Heroku or Amazon Web Services(AWS).
