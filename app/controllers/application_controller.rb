@@ -1,9 +1,27 @@
 class ApplicationController < ActionController::API
   before_action :allow_cross_origin_requests, if: proc { Rails.env.development? }
+  before_action :authenticate_request, only: [:set_user]
 
   def preflight
     render nothing: true
   end
+
+  def set_user
+    @set_user = User.first
+    render json: @set_user, only: [:handle]
+  end
+
+  # For whatever reason, the current_user method/action below would cause
+  #   an infinitely recursive ActiveRecord lookup and associated --
+  #   SystemStackError (stack level too deep). This would happen when making
+  #   an API call from the browser with the '/current_user' endpoint and through the
+  #   router. set_user above is configured the exact same way except for the
+  #   name but does not cause the error. Was not able to debug this.
+
+  # def current_user
+  #   @current_user = User.first
+  #   render json: @current_user, only: [:handle]
+  # end
 
   private
 
@@ -13,5 +31,14 @@ class ApplicationController < ActionController::API
     headers['Access-Control-Allow-Methods'] = 'POST, PUT, DELETE, GET, OPTIONS'
     headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
     headers['Access-Control-Max-Age'] = '1728000'
+  end
+
+  def authenticate_request
+    begin
+      uid = JWT.decode(request.headers['Authorization'], Rails.application.secrets.secret_key_base)[0]['uid']
+      @set_user = User.find_by(uid: uid)
+    rescue JWT::DecodeError
+      render json: 'authentication failed', status: 401
+    end
   end
 end

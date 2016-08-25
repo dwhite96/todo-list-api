@@ -37,11 +37,14 @@ Rails.application.configure do
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
 
-
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+  # Set environment secrets
+  ENV['ORIGIN'] = 'http://localhost:8080'
+  ENV['OAUTH_CALLBACK'] = 'http://127.0.0.1:3000/access_token'
 end
