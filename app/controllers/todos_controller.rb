@@ -1,10 +1,11 @@
 class TodosController < ApplicationController
   before_action :set_todo, only: [:show, :update, :destroy]
+  before_action :authenticate_request, only: [:create]
 
   # GET /todos
   def index
     @todos = Todo.all
-    render json: @todos
+    render json: @todos, include: { user: { only: [:handle] } }
   end
 
   # GET /todos/1
@@ -14,10 +15,10 @@ class TodosController < ApplicationController
 
   # POST /todos
   def create
-    @todo = Todo.new(todo_params)
+    @todo = @set_user.todos.build(todo_params)
 
     if @todo.save
-      render json: @todo, status: :created, location: @todo
+      render json: @todo, include: { user: { only: [:handle] } }, status: :created, location: @todo
     else
       render json: @todo.errors, status: :unprocessable_entity
     end
@@ -44,6 +45,6 @@ class TodosController < ApplicationController
   end
 
   def todo_params
-    params.require(:todo).permit(:title, :completed, :order)
+    params.require(:todo).permit(:title, :completed, :user_id)
   end
 end
