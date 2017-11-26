@@ -33,16 +33,18 @@ rake db:create db:migrate
 
 ### Use
 
+Run the development web server with `bundle exec rails s`
+
 Common (RESTful) endpoints to use from your frontend application:
 
 See a list of todos:
-GET ```/todos```
+GET `/todos`
 
 See one todo:
-GET ```/todos/:id```
+GET `/todos/:id`
 
 Add a todo:
-POST ```/todos```
+POST `/todos`
 
 ## How to run the test suite
 
